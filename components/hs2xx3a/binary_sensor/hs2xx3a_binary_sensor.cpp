@@ -1,5 +1,5 @@
 #include "esphome/core/log.h"
-#include "hs2xx3a.h"
+#include "hs2xx3a_binary_sensor.h"
 
 namespace esphome {
 namespace hs2xx3a_binary_sensor {
