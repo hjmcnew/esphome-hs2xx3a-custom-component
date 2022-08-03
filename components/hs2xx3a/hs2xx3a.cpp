@@ -6,15 +6,15 @@ namespace hs2xx3a {
 
 static const char *TAG = "hs2xx3a.component";
 
-void HS2xx3AComponent::setup() {
+void HS2XX3A::setup() {
 
 }
 
-void HS2xx3AComponent::loop() {
+void HS2XX3A::loop() {
 
 }
 
-void HS2xx3AComponent::dump_config(){
+void HS2XX3A::dump_config(){
     ESP_LOGCONFIG(TAG, "HS2xx3A component");
 }
 

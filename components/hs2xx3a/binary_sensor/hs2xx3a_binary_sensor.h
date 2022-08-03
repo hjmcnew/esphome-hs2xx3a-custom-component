@@ -7,7 +7,7 @@
 namespace esphome {
 namespace hs2xx3a {
 
-class HS2xx3ABinarySensor : public binary_sensor::BinarySensor, public PollingComponent {
+class HS2XX3ABinarySensor : public binary_sensor::BinarySensor, public PollingComponent {
  public:
   void setup() override;
   void update() override;

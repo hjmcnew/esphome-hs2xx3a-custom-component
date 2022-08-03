@@ -6,7 +6,7 @@
 namespace esphome {
 namespace hs2xx3a {
 
-class HS2xx3AComponent : public uart::UARTDevice, public Component {
+class HS2XX3A : public uart::UARTDevice, public Component {
   public:
     void setup() override;
     void loop() override;
