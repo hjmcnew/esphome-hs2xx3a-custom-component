@@ -2,21 +2,21 @@
 #include "hs2xx3a.h"
 
 namespace esphome {
-namespace hs2xx3a_binary_sensor {
+namespace hs2xx3a {
 
-static const char *TAG = "hs2xx3a_binary_sensor.binary_sensor";
+static const char *TAG = "hs2xx3a.component";
 
-void HS2xx3ABinarySensor::setup() {
-    
-}
-  
-void HS2xx3ABinarySensor::update() {
+void HS2XX3A::setup() {
 
 }
 
-void HS2xx3ABinarySensor::dump_config() {
-    ESP_LOGCONFIG(TAG, "Custom binary sensor");
+void HS2XX3A::loop() {
+
 }
 
-} //namespace hs2xx3a_binary_sensor
-} //namespace esphome
+void HS2XX3A::dump_config(){
+    ESP_LOGCONFIG(TAG, "HS2xx3A component");
+}
+
+}  // namespace hs2xx3a
+}  // namespace esphome
