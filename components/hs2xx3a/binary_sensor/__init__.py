@@ -1,12 +1,11 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import binary_sensor
-from esphome.const import CONF_ID
-from .. import HS2XX3A_CONFIG_SCHEMA, hs2xx3a_ns
+from .. import CONFIG_SCHEMA, hs2xx3a_ns
 
 HS2xx3ABinarySensor = hs2xx3a_ns.class_('HS2xx3ABinarySensor', binary_sensor.BinarySensor, cg.Component)
 
-CONFIG_SCHEMA = binary_sensor.BINARY_SENSOR_SCHEMA.extend({
+CONFIG_SCHEMA = CONFIG_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(HS2xx3ABinarySensor),
 }).extend(cv.COMPONENT_SCHEMA)
 
