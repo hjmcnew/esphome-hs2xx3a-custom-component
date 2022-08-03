@@ -9,8 +9,7 @@ DEPENDNCIES = ['hs2xx3a']
 HS2XX3ABinarySensor = hs2xx3a_ns.class_('HS2XX3ABinarySensor', binary_sensor.BinarySensor, cg.Component)
 
 CONFIG_SCHEMA = binary_sensor.BINARY_SENSOR_SCHEMA.extend({
-    cv.GenerateID(): cv.declare_id(HS2XX3ABinarySensor),
-    cv.GenerateID(CONF_HS2XX3A_ID): cv.use_id(HS2XX3A)
+    cv.GenerateID(): cv.declare_id(HS2XX3ABinarySensor)
 }).extend(cv.COMPONENT_SCHEMA)
 
 
