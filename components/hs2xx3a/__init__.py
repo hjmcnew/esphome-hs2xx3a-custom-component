@@ -9,7 +9,7 @@ AUTO_LOAD = ['binary_sensor']
 hs2xx3a_ns = cg.esphome_ns.namespace('hs2xx3a')
 HS2xx3AComponent = hs2xx3a_ns.class_('HS2xx3Component', cg.Component, uart.UARTDevice)
 
-HS2XX3A_CONFIG_SCHEMA = cv.Schema({
+CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(HS2xx3AComponent)
 }).extend(cv.COMPONENT_SCHEMA).extend(uart.UART_DEVICE_SCHEMA)
 
