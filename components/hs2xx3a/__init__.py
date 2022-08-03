@@ -5,12 +5,13 @@ from esphome.const import CONF_ID
 
 DEPENDENCIES = ['uart']
 AUTO_LOAD = ['binary_sensor']
+MULTI_CONF = True
 
 hs2xx3a_ns = cg.esphome_ns.namespace('hs2xx3a')
-HS2xx3AComponent = hs2xx3a_ns.class_('HS2xx3Component', cg.Component, uart.UARTDevice)
+HS2XX3A = hs2xx3a_ns.class_('HS2XX3A', cg.Component, uart.UARTDevice)
 
 CONFIG_SCHEMA = cv.Schema({
-    cv.GenerateID(): cv.declare_id(HS2xx3AComponent)
+    cv.GenerateID(): cv.declare_id(HS2XX3A)
 }).extend(cv.COMPONENT_SCHEMA).extend(uart.UART_DEVICE_SCHEMA)
 
 def to_code(config):
