@@ -1,4 +1,4 @@
-## This repo houses development of a custome component to support the LeapMMW HS2xx3A series of mmWave sensors, also branded as the DFRobot sen0395.
+## This repo houses development of a custom component to support the LeapMMW HS2xx3A series of mmWave sensors, also branded as the DFRobot sen0395.
 
 There are two ways to install:
 
