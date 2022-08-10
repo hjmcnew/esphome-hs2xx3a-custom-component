@@ -9,9 +9,13 @@ There are two ways to install:
    ```
    substitutions:
      device_name: leapmmw
+     # This will vary based on your board
      uart_tx_pin: TX
+     # This will vary based on your board
      uart_rx_pin: RX
+     # This will vary based on your board
      gpio_pin: D0
+     # (Optional) Path to the leapmmw_sensor.h file relative to your esphome configuration directory
      header_file: leapmmw_sensor.h
    packages:
      leapmmw_sensor: !include packages/leapmmw_sensor.yml
@@ -23,9 +27,13 @@ There are two ways to install:
    ```
    substitutions:
      device_name: leapmmw
+     # This will vary based on your board
      uart_tx_pin: TX
+     # This will vary based on your board
      uart_rx_pin: RX
+     # This will vary based on your board
      gpio_pin: D0
+     # (Optional) Path to the leapmmw_sensor.h file relative to your esphome configuration directory.
      header_file: leapmmw_sensor.h
    packages:
      remote_package:
