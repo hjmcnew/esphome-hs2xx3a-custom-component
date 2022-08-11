@@ -10,6 +10,10 @@ esphome:
   includes:
     - ${header_file}
 
+logger:
+  logs:
+    sensor: INFO # reduced logging to minimize web_server target overload..
+
 uart:
   id: uart_bus
   tx_pin: ${uart_tx_pin}
@@ -202,8 +206,8 @@ button:
           data: "resetSystem 0"
 
   - platform: template
-    name: factory_reset_MCU_${device_name}
-    id: factory_reset_MCU
+    name: factory_reset_mmwMCU_${device_name}
+    id: factory_reset_mmwMCU
     entity_category: diagnostic
     on_press:
       - switch.turn_off: mmwave_sensor
