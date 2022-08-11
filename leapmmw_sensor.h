@@ -114,8 +114,8 @@ class leapmmw : public Component, public UARTDevice {
 
         // compare last line
         if (line.substr(0, 8) == "Response") {
-          ESP_LOGD("custom", "Found Response - line is: %s", line.c_str());
-          ESP_LOGD("custom", "Found Response - lastline is: %s", getline.c_str());
+          // ESP_LOGD("custom", "Found Response - line is: %s", line.c_str());
+          // ESP_LOGD("custom", "Found Response - lastline is: %s", getline.c_str());
           
           // leapMMW:/>getSensitivity
           if (getline.substr(0, 24) == "leapMMW:/>getSensitivity" || getline.substr(0, 14) == "getSensitivity") {
@@ -123,7 +123,7 @@ class leapmmw : public Component, public UARTDevice {
             if (getSensitivity.empty()) {
               ESP_LOGD("custom", "Did not find a value for getSensitivity");
             } else {
-              ESP_LOGD("custom", "The value of getSensitivity is: %f", parse_number<float>(getSensitivity).value());
+              // ESP_LOGD("custom", "The value of getSensitivity is: %f", parse_number<float>(getSensitivity).value());
               publishNumber("sensitivity", parse_number<float>(getSensitivity).value());
             }
           }
@@ -145,7 +145,7 @@ class leapmmw : public Component, public UARTDevice {
             if (getLatency.empty()) {
               ESP_LOGD("custom", "Did not find a value for getLatency");
             } else {
-              ESP_LOGD("custom", "The value of getLatency is: %f", parse_number<float>(getLatency).value());
+              // ESP_LOGD("custom", "The value of getLatency is: %f", parse_number<float>(getLatency).value());
               publishNumber("latency", parse_number<float>(getLatency).value());
             }
           }
@@ -157,7 +157,7 @@ class leapmmw : public Component, public UARTDevice {
               ESP_LOGD("custom", "Did not find a value for getLedMode");
             } else {
               int led_state = parse_number<int>(getLedMode).value();
-              ESP_LOGD("custom", "The value of getLedMode is: %i", led_state);
+              // ESP_LOGD("custom", "The value of getLedMode is: %i", led_state);
               int setled_state;
               if (led_state == 1) {
                 setled_state = 0;
@@ -169,17 +169,17 @@ class leapmmw : public Component, public UARTDevice {
           }
         }
         if (line.substr(0, 4) == "Done") {
-          ESP_LOGD("custom", "Found Done - line is: %s", line.c_str());
-          ESP_LOGD("custom", "Found Done - lastline is: %s", getline.c_str());
+          // ESP_LOGD("custom", "Found Done - line is: %s", line.c_str());
+          // ESP_LOGD("custom", "Found Done - lastline is: %s", getline.c_str());
           // leapMMW:/>sensorStop
           if (getline.substr(0, 20) == "leapMMW:/>sensorStop") {
-            ESP_LOGD("custom", "sensorStop completed successfully");
+            // ESP_LOGD("custom", "sensorStop completed successfully");
             publishSwitch("mmwave_sensor", 0);
           }
 
           // leapMMW:/>sensorStart
           if (getline.substr(0, 21) == "leapMMW:/>sensorStart") {
-            ESP_LOGD("custom", "sensorStart completed successfully");
+            // ESP_LOGD("custom", "sensorStart completed successfully");
             publishSwitch("mmwave_sensor", 1);
           }
         }
