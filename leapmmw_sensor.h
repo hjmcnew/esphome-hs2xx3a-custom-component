@@ -105,8 +105,11 @@ class leapmmw : public Component, public UARTDevice {
               }
           }
           id(num_targets).publish_state(parse_number<float>(v[0]).value());
-          publishTarget(v[1], parse_number<float>(v[2]).value(), parse_number<float>(v[4]).value());
-          for(int i = parse_number<int>(v[0]).value() +1 ; i < 9; i++) publishTarget(to_string(i), 0, 0);
+          if (id(show_target_stats).state == 1) {
+            publishTarget(v[1], parse_number<float>(v[2]).value(), parse_number<float>(v[4]).value());
+            // zero null targets
+            for(int i = parse_number<int>(v[0]).value() +1 ; i < 9; i++) publishTarget(to_string(i), 0, 0);
+          }
         }
         if (line.substr(0, 6) == "$JYRPO" && id(mmwave_sensor).state == 0) {
           publishSwitch("mmwave_sensor", 1);

@@ -95,6 +95,14 @@ switch:
     name: use_safe_mode
 
   - platform: template
+    name: show_target_stats
+    id: show_target_stats
+    optimistic: true
+    internal: true
+    on_turn_off:
+      - lambda: 'return clearTargets();'
+
+  - platform: template
     name: mmwave_sensor
     id: mmwave_sensor # do not change
     entity_category: config
