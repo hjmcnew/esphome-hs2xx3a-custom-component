@@ -24,6 +24,7 @@ binary_sensor:
   - platform: gpio
     name: mmwave_presence_detection
     id: mmwave_presence_detection
+    device_class: motion
     pin:
       number: ${gpio_pin}
       mode: INPUT_PULLDOWN
@@ -82,6 +83,7 @@ sensor:
   - platform: template
     name: num_targets
     id: num_targets # do not change
+    accuracy_decimals: 0
 
   - platform: custom
     lambda: |-
@@ -93,6 +95,14 @@ sensor:
 switch:
   - platform: safe_mode
     name: use_safe_mode
+
+  - platform: template
+    name: show_target_stats
+    id: show_target_stats
+    optimistic: true
+    internal: true
+    on_turn_off:
+      - lambda: 'return clearTargets();'
 
   - platform: template
     name: mmwave_sensor
