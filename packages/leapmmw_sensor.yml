@@ -1,10 +1,10 @@
 substitutions:
   device_name: mmwave
-  gpio_pin: GPIO23
   ## FIXME: To be removed later. Would cause a breaking change.
   uart_tx_pin: GPIO19
   uart_rx_pin: GPIO18
   ##
+  gpio_pin: GPIO23
   header_file: leapmmw_sensor.h
 
 esphome:
