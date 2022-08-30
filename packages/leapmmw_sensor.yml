@@ -1,7 +1,5 @@
 substitutions:
   device_name: mmwave
-  uart_tx_pin: GPIO19
-  uart_rx_pin: GPIO18
   gpio_pin: GPIO23
   header_file: leapmmw_sensor.h
 
