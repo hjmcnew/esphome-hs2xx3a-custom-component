@@ -3,6 +3,10 @@ substitutions:
   uart_rx_pin: GPIO18
 
 uart:
+  id: uart_bus
+  tx_pin: ${uart_tx_pin}
+  rx_pin: ${uart_rx_pin}
+  baud_rate: 115200
   debug:
     direction: BOTH
     dummy_receiver: false
