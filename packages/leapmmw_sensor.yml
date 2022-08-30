@@ -1,6 +1,10 @@
 substitutions:
   device_name: mmwave
   gpio_pin: GPIO23
+  ## FIXME: To be removed later. Would cause a breaking change.
+  uart_tx_pin: GPIO19
+  uart_rx_pin: GPIO18
+  ##
   header_file: leapmmw_sensor.h
 
 esphome:
@@ -11,6 +15,14 @@ esphome:
 logger:
   logs:
     sensor: INFO # reduced logging to minimize web_server target overload..
+
+## FIXME: To be removed later. Would cause a breaking change
+uart:
+  id: uart_bus
+  tx_pin: ${uart_tx_pin}
+  rx_pin: ${uart_rx_pin}
+  baud_rate: 115200
+##
 
 binary_sensor:
   - platform: gpio
