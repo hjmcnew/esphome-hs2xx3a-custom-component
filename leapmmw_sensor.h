@@ -161,7 +161,7 @@ class leapmmw : public Component, public UARTDevice {
             } else {
               int led_state = parse_number<int>(getLedMode).value();
               // ESP_LOGD("custom", "The value of getLedMode is: %i", led_state);
-              int setled_state;
+              int setled_state = -1;
               if (led_state == 1) {
                 setled_state = 0;
               } else if (led_state == 0) {
