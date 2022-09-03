@@ -15,7 +15,7 @@ esphome:
 logger:
   logs:
     sensor: INFO # reduced logging to minimize web_server target overload..
-    script: INFO
+    script: ERROR
 
 ## FIXME: To be removed later. Would cause a breaking change
 uart:
