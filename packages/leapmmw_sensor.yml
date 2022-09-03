@@ -168,14 +168,6 @@ switch:
             else:
               - delay: 100ms
               - script.execute: turn_off_led
-      - switch.turn_off: mmwave_sensor
-      - delay: 1s
-      - uart.write: "setLedMode 1 1"
-      - delay: 1s
-      - lambda: |-
-          leapmmw(id(uart_bus)).getmmwConf("getLedMode 1");
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor 
 
 number:
   - platform: template
