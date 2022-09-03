@@ -15,6 +15,7 @@ esphome:
 logger:
   logs:
     sensor: INFO # reduced logging to minimize web_server target overload..
+    script: INFO
 
 ## FIXME: To be removed later. Would cause a breaking change
 uart:
@@ -114,15 +115,11 @@ switch:
     entity_category: config
     optimistic: true
     turn_on_action:
-      - uart.write: "setUartOutput 1 0"
-      - delay: 1s
-      - uart.write: "setUartOutput 2 1 1 2"
-      - delay: 1s
-      - uart.write: "saveConfig"
-      - delay: 3s 
-      - uart.write: "sensorStart"
+      then:
+        - script.execute: turn_on_mmwave_sensor
     turn_off_action:
-      - uart.write: "sensorStop"
+      then:
+        - script.execute: turn_off_mmwave_sensor
 
   - platform: template
     name: led
@@ -130,15 +127,47 @@ switch:
     entity_category: config
     optimistic: true
     turn_on_action:
-      - switch.turn_off: mmwave_sensor
-      - delay: 1s
-      - uart.write: "setLedMode 1 0"
-      - delay: 1s
-      - lambda: |-
-          leapmmw(id(uart_bus)).getmmwConf("getLedMode 1");
-      - delay: 1s 
-      - switch.turn_on: mmwave_sensor
+      then:
+        - if:
+            condition:
+              or:
+                - script.is_running: turn_on_led
+                - script.is_running: turn_off_led
+                - script.is_running: set_distance
+                - script.is_running: set_latency
+                - script.is_running: set_sensitivity
+            then:
+              - script.wait: turn_on_led
+              - script.wait: turn_off_led
+              - script.wait: set_distance
+              - script.wait: set_latency
+              - script.wait: set_sensitivity
+              - delay: 100ms
+              - script.execute: turn_on_led
+            else:
+              - delay: 100ms
+              - script.execute: turn_on_led
     turn_off_action:
+      then:
+        - if:
+            condition:
+              or:
+                - script.is_running: turn_on_led
+                - script.is_running: turn_off_led
+                - script.is_running: set_distance
+                - script.is_running: set_latency
+                - script.is_running: set_sensitivity
+            then:
+              - script.wait: turn_on_led
+              - script.wait: turn_off_led
+              - script.wait: set_distance
+              - script.wait: set_latency
+              - script.wait: set_sensitivity
+              - delay: 100ms
+              - script.execute: turn_off_led
+            else:
+              - delay: 100ms
+              - script.execute: turn_off_led
       - switch.turn_off: mmwave_sensor
       - delay: 1s
       - uart.write: "setLedMode 1 1"
@@ -162,13 +191,29 @@ number:
       leapmmw(id(uart_bus)).getmmwConf("getRange");
       return {};
     set_action:
-      - switch.turn_off: mmwave_sensor
-      - delay: 1s
-      - uart.write: !lambda
-          std::string range = "setRange 0 " + str_sprintf("%.2f", x);
-          return std::vector<unsigned char>(range.begin(), range.end());
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor 
+      then:
+        - globals.set:
+            id: distance_global
+            value: !lambda 'return x;'
+        - if:
+            condition:
+              or:
+                - script.is_running: turn_on_led
+                - script.is_running: turn_off_led
+                - script.is_running: set_distance
+                - script.is_running: set_latency
+                - script.is_running: set_sensitivity
+            then:
+              - script.wait: turn_on_led
+              - script.wait: turn_off_led
+              - script.wait: set_distance
+              - script.wait: set_latency
+              - script.wait: set_sensitivity
+              - delay: 75ms
+              - script.execute: set_distance
+            else:
+              - delay: 75ms
+              - script.execute: set_distance 
       
   - platform: template
     name: latency
@@ -183,13 +228,29 @@ number:
     unit_of_measurement: s
     mode: box
     set_action:
-      - switch.turn_off: mmwave_sensor
-      - delay: 1s
-      - uart.write: !lambda
-          std::string setL = "setLatency 0.1 " + str_sprintf("%.0f", x);
-          return std::vector<unsigned char>(setL.begin(), setL.end());
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor
+      then:
+        - globals.set:
+            id: latency_global
+            value: !lambda 'return x;'
+        - if:
+            condition:
+              or:
+                - script.is_running: turn_on_led
+                - script.is_running: turn_off_led
+                - script.is_running: set_distance
+                - script.is_running: set_latency
+                - script.is_running: set_sensitivity
+            then:
+              - script.wait: turn_on_led
+              - script.wait: turn_off_led
+              - script.wait: set_distance
+              - script.wait: set_latency
+              - script.wait: set_sensitivity
+              - delay: 50ms
+              - script.execute: set_latency
+            else:
+              - delay: 50ms
+              - script.execute: set_latency
 
   - platform: template
     name: sensitivity
@@ -202,13 +263,29 @@ number:
       return {};
     step: 1
     set_action:
-      - switch.turn_off: mmwave_sensor
-      - delay: 1s
-      - uart.write: !lambda
-          std::string mss = "setSensitivity " + to_string((int)x);
-          return std::vector<unsigned char>(mss.begin(), mss.end());
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor
+      then:
+        - globals.set:
+            id: sensitivity_global
+            value: !lambda 'return x;'
+        - if:
+            condition:
+              or:
+                - script.is_running: turn_on_led
+                - script.is_running: turn_off_led
+                - script.is_running: set_distance
+                - script.is_running: set_latency
+                - script.is_running: set_sensitivity
+            then:
+              - script.wait: turn_on_led
+              - script.wait: turn_off_led
+              - script.wait: set_distance
+              - script.wait: set_latency
+              - script.wait: set_sensitivity
+              - delay: 25ms
+              - script.execute: set_sensitivity
+            else:
+              - delay: 25ms
+              - script.execute: set_sensitivity
 
 button:
   - platform: restart
@@ -229,3 +306,93 @@ button:
       - uart.write: "resetCfg"
       - delay: 3s
       - switch.turn_on: mmwave_sensor
+
+globals:
+  - id: distance_global
+    type: float
+  - id: latency_global
+    type: float
+  - id: sensitivity_global
+    type: int
+
+script:
+  - id: turn_on_mmwave_sensor
+    then:
+      - uart.write: "setUartOutput 1 0"
+      - delay: 1s
+      - uart.write: "setUartOutput 2 1 1 2"
+      - delay: 1s
+      - uart.write: "saveConfig"
+      - delay: 3s 
+      - uart.write: "sensorStart"
+
+  - id: turn_off_mmwave_sensor
+    then:
+      - uart.write: "sensorStop"
+
+  - id: turn_on_led
+    then:
+      - switch.turn_off: mmwave_sensor
+      - delay: 1s
+      - uart.write: "setLedMode 1 0"
+      - delay: 1s
+      - lambda: |-
+          leapmmw(id(uart_bus)).getmmwConf("getLedMode 1");
+      - delay: 1s 
+      - switch.turn_on: mmwave_sensor
+      - delay: 6s # the sum of mmwave_sensor delays
+    
+  - id: turn_off_led
+    then:
+      - switch.turn_off: mmwave_sensor
+      - delay: 1s
+      - uart.write: "setLedMode 1 1"
+      - delay: 1s
+      - lambda: |-
+          leapmmw(id(uart_bus)).getmmwConf("getLedMode 1");
+      - delay: 1s
+      - switch.turn_on: mmwave_sensor
+      - delay: 6s # the sum of mmwave_sensor delays
+
+  - id: set_distance
+    mode: queued
+    then:
+      - switch.turn_off: mmwave_sensor
+      - delay: 1s
+      - uart.write: !lambda
+          std::string range = "setRange 0 " + str_sprintf("%.2f", id(distance_global));
+          return std::vector<unsigned char>(range.begin(), range.end());
+      # - delay: 1s
+      # - lambda: |-
+      #     leapmmw(id(uart_bus)).getmmwConf("getRange");
+      - delay: 1s
+      - switch.turn_on: mmwave_sensor
+      - delay: 6s # the sum of mmwave_sensor delays
+
+  - id: set_latency
+    mode: queued
+    then:
+      - switch.turn_off: mmwave_sensor
+      - delay: 1s
+      - uart.write: !lambda
+          std::string setL = "setLatency 0.1 " + str_sprintf("%.0f", id(latency_global));
+          return std::vector<unsigned char>(setL.begin(), setL.end());
+      # - delay: 1s
+      # - lambda: |-
+      #     leapmmw(id(uart_bus)).getmmwConf("getLatency");
+      - delay: 1s
+      - switch.turn_on: mmwave_sensor
+      - delay: 6s # the sum of mmwave_sensor delays
+
+  - id: set_sensitivity
+    mode: queued
+    then:
+      - switch.turn_off: mmwave_sensor
+      - delay: 1s
+      - uart.write: !lambda
+          std::string mss = "setSensitivity " + to_string(id(sensitivity_global));
+          return std::vector<unsigned char>(mss.begin(), mss.end());
+      - delay: 1s
+      - switch.turn_on: mmwave_sensor
+      - delay: 6s # the sum of mmwave_sensor delays
+      
