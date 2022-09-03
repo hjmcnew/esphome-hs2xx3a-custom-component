@@ -362,9 +362,6 @@ script:
       - uart.write: !lambda
           std::string range = "setRange 0 " + str_sprintf("%.2f", id(distance_global));
           return std::vector<unsigned char>(range.begin(), range.end());
-      # - delay: 1s
-      # - lambda: |-
-      #     leapmmw(id(uart_bus)).getmmwConf("getRange");
       - delay: 1s
       - switch.turn_on: mmwave_sensor
       - delay: 6s # the sum of mmwave_sensor delays
@@ -377,9 +374,6 @@ script:
       - uart.write: !lambda
           std::string setL = "setLatency 0.1 " + str_sprintf("%.0f", id(latency_global));
           return std::vector<unsigned char>(setL.begin(), setL.end());
-      # - delay: 1s
-      # - lambda: |-
-      #     leapmmw(id(uart_bus)).getmmwConf("getLatency");
       - delay: 1s
       - switch.turn_on: mmwave_sensor
       - delay: 6s # the sum of mmwave_sensor delays
