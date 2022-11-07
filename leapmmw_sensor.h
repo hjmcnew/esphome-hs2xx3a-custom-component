@@ -32,7 +32,9 @@ class leapmmw : public Component, public UARTDevice {
     auto get_numbers = App.get_numbers();
     for(int i = 0; i < get_numbers.size(); i++) {
       auto name = get_numbers[i]->get_name();
-      if(name.size() > 6 && name == sensor) {
+      // if(name.size() > 6 && name == sensor) {
+      std::size_t found = name.find(sensor);
+      if(name.size() > 6 && found!=std::string::npos) {
         get_numbers[i]->publish_state(resp);
       }
     }
@@ -42,7 +44,9 @@ class leapmmw : public Component, public UARTDevice {
     auto sens = App.get_switches();
     for(int i = 0; i < sens.size(); i++) {
       auto name = sens[i]->get_name();
-      if(name.size() > 2 && name == sensor) {
+      // if(name.size() > 2 && name == sensor) {
+      std::size_t found = name.find(sensor);
+      if(name.size() > 2 && found!=std::string::npos) {
           sens[i]->publish_state(state);
       }
     }
