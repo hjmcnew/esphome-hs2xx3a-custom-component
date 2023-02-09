@@ -1,52 +1,55 @@
 #include "esphome.h"
 #include <string>
+#include "esphome/core/helpers.h"
 
-void publishTarget(std::string idx, float dist, float snr) {
-  auto get_sensors = App.get_sensors();
-  for(int i = 0; i < get_sensors.size(); i++) {
-    auto name = get_sensors[i]->get_name();
-    auto target = "target_" + to_string(idx);
-    if(name.size() > 10 && name.substr(0, 8) == target) {
-      if(name.substr(9, 3) == "dis") {
-        get_sensors[i]->publish_state(dist);
-      } else if(name.substr(9, 3) == "SNR") {
-        get_sensors[i]->publish_state(snr);
-      }
-    }
+#define PUBLISH_NUMBER(sensor, valueString) (id(sensor).publish_state(parse_number<float>(valueString).value()))
+#define PUBLISH_SWITCH(sensor, onOff) (id(sensor).publish_state(onOff))
+
+void publishTarget(int idx, float dist, float snr) {
+  switch(idx) {
+    case 1:
+      id(target_1_distance_m).publish_state(dist);
+      id(target_1_SNR).publish_state(snr);
+      break;
+
+    case 2:
+      id(target_2_distance_m).publish_state(dist);
+      id(target_2_SNR).publish_state(snr);
+      break;
+
+    case 3:
+      id(target_3_distance_m).publish_state(dist);
+      id(target_3_SNR).publish_state(snr);
+      break;
+
+    case 4:
+      id(target_4_distance_m).publish_state(dist);
+      id(target_4_SNR).publish_state(snr);
+      break;
+
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+      break;
+    default:
+      ESP_LOGD("custom", "Invalid target sensor number: %d", idx);
+      break;
   }
 };
+
 static void clearTargets () {
-  for(int i = 1 ; i < 9; i++) publishTarget(to_string(i), 0, 0);
+  for(int i = 1 ; i < 9; i++) publishTarget(i, 0.0, 0.0);
 }
 
-
 class leapmmw : public Component, public UARTDevice {
+
  public:
   leapmmw(UARTComponent *parent) : UARTDevice(parent) {}
   
   void setup() override {
     //
   }
-
-  void publishNumber (std::string sensor, float resp) {
-    auto get_numbers = App.get_numbers();
-    for(int i = 0; i < get_numbers.size(); i++) {
-      auto name = get_numbers[i]->get_name();
-      if(name.size() > 6 && name == sensor) {
-        get_numbers[i]->publish_state(resp);
-      }
-    }
-  };
-
-  void publishSwitch(std::string sensor, int state) {
-    auto sens = App.get_switches();
-    for(int i = 0; i < sens.size(); i++) {
-      auto name = sens[i]->get_name();
-      if(name.size() > 2 && name == sensor) {
-          sens[i]->publish_state(state);
-      }
-    }
-  };
 
   void getmmwConf(std::string mmwparam) {
     mmwparam = mmwparam + "\r";
@@ -106,20 +109,20 @@ class leapmmw : public Component, public UARTDevice {
           }
           id(num_targets).publish_state(parse_number<float>(v[0]).value());
           if (id(show_target_stats).state == 1) {
-            publishTarget(v[1], parse_number<float>(v[2]).value(), parse_number<float>(v[4]).value());
+            publishTarget(stoi(v[1]), parse_number<float>(v[2]).value(), parse_number<float>(v[4]).value());
             // zero null targets
-            for(int i = parse_number<int>(v[0]).value() +1 ; i < 9; i++) publishTarget(to_string(i), 0, 0);
+            for(int i = parse_number<int>(v[0]).value() +1 ; i < 9; i++) publishTarget(i, 0.0, 0.0);
           }
         }
         if (line.substr(0, 6) == "$JYRPO" && id(mmwave_sensor).state == 0) {
-          publishSwitch("mmwave_sensor", 1);
+          PUBLISH_SWITCH(mmwave_sensor, 1);
         }
 
         // compare last line
         if (line.substr(0, 8) == "Response") {
           // ESP_LOGD("custom", "Found Response - line is: %s", line.c_str());
           // ESP_LOGD("custom", "Found Response - lastline is: %s", getline.c_str());
-          
+
           // leapMMW:/>getSensitivity
           if (getline.substr(0, 24) == "leapMMW:/>getSensitivity" || getline.substr(0, 14) == "getSensitivity") {
             std::string getSensitivity = line.substr(9, 1);
@@ -127,7 +130,7 @@ class leapmmw : public Component, public UARTDevice {
               ESP_LOGD("custom", "Did not find a value for getSensitivity");
             } else {
               // ESP_LOGD("custom", "The value of getSensitivity is: %f", parse_number<float>(getSensitivity).value());
-              publishNumber("sensitivity", parse_number<float>(getSensitivity).value());
+              PUBLISH_NUMBER(sensitivity, getSensitivity);
             }
           }
 
@@ -137,8 +140,8 @@ class leapmmw : public Component, public UARTDevice {
             if (getRange.empty()) {
               ESP_LOGD("custom", "Did not find a value for getRange");
             } else {
-              ESP_LOGD("custom", "The value of getRange is: %f", parse_number<float>(getRange).value());
-              publishNumber("distance", parse_number<float>(getRange).value());
+              // ESP_LOGD("custom", "The value of getRange is: %f", parse_number<float>(getRange).value());
+              PUBLISH_NUMBER(distance, getRange);
             }
           }
 
@@ -149,7 +152,7 @@ class leapmmw : public Component, public UARTDevice {
               ESP_LOGD("custom", "Did not find a value for getLatency");
             } else {
               // ESP_LOGD("custom", "The value of getLatency is: %f", parse_number<float>(getLatency).value());
-              publishNumber("latency", parse_number<float>(getLatency).value());
+              PUBLISH_NUMBER(latency, getLatency);
             }
           }
 
@@ -161,13 +164,9 @@ class leapmmw : public Component, public UARTDevice {
             } else {
               int led_state = parse_number<int>(getLedMode).value();
               // ESP_LOGD("custom", "The value of getLedMode is: %i", led_state);
-              int setled_state = -1;
-              if (led_state == 1) {
-                setled_state = 0;
-              } else if (led_state == 0) {
-                setled_state = 1;
+              if (led_state == 0 || led_state == 1) {
+                PUBLISH_SWITCH(led, 1 - led_state);
               }
-              publishSwitch("led", setled_state);
             }
           }
         }
@@ -177,13 +176,13 @@ class leapmmw : public Component, public UARTDevice {
           // leapMMW:/>sensorStop
           if (getline.substr(0, 20) == "leapMMW:/>sensorStop") {
             // ESP_LOGD("custom", "sensorStop completed successfully");
-            publishSwitch("mmwave_sensor", 0);
+            PUBLISH_SWITCH(mmwave_sensor, 0);
           }
 
           // leapMMW:/>sensorStart
           if (getline.substr(0, 21) == "leapMMW:/>sensorStart") {
             // ESP_LOGD("custom", "sensorStart completed successfully");
-            publishSwitch("mmwave_sensor", 1);
+            PUBLISH_SWITCH(mmwave_sensor, 1);
           }
         }
         getline = buffer; 
