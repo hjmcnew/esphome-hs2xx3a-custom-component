@@ -1,5 +1,7 @@
 substitutions:
   device_name: mmwave
+  mmwave_prefix: ""
+  mmwave_suffix: ""
   ## FIXME: To be removed later. Would cause a breaking change.
   uart_tx_pin: GPIO19
   uart_rx_pin: GPIO18
@@ -8,7 +10,7 @@ substitutions:
   header_file: leapmmw_sensor.h
 
 esphome:
-  name: ${device_name}
+  name: "${device_name}"
   includes:
     - ${header_file}
 
@@ -27,7 +29,7 @@ uart:
 
 binary_sensor:
   - platform: gpio
-    name: mmwave_presence_detection
+    name: "${mmwave_prefix}mmWave Presence Detection${mmwave_suffix}"
     id: mmwave_presence_detection
     device_class: motion
     pin:
@@ -46,47 +48,47 @@ binary_sensor:
     
 sensor:      
   - platform: template
-    name: target_1_distance_m
+    name: "${mmwave_prefix}Target 1 Distance m${mmwave_suffix}"
     id: target_1_distance_m # do not change
     internal: true
     
   - platform: template
-    name: target_2_distance_m
+    name: "${mmwave_prefix}Target 2 Distance m${mmwave_suffix}"
     id: target_2_distance_m # do not change
     internal: true
     
   - platform: template
-    name: target_3_distance_m
+    name: "${mmwave_prefix}Target 3 Distance m${mmwave_suffix}"
     id: target_3_distance_m # do not change
     internal: true
     
   - platform: template
-    name: target_4_distance_m
+    name: "${mmwave_prefix}Target 4 Distance m${mmwave_suffix}"
     id: target_4_distance_m # do not change
     internal: true
     
   - platform: template
-    name: target_1_SNR
+    name: "${mmwave_prefix}Target 1 SNR${mmwave_suffix}"
     id: target_1_SNR # do not change
     internal: true
 
   - platform: template
-    name: target_2_SNR
+    name: "${mmwave_prefix}Target 2 SNR${mmwave_suffix}"
     id: target_2_SNR # do not change
     internal: true
     
   - platform: template
-    name: target_3_SNR
+    name: "${mmwave_prefix}Target 3 SNR${mmwave_suffix}"
     id: target_3_SNR # do not change
     internal: true
     
   - platform: template
-    name: target_4_SNR
+    name: "${mmwave_prefix}Target 4 SNR${mmwave_suffix}"
     id: target_4_SNR # do not change
     internal: true
 
   - platform: template
-    name: num_targets
+    name: "${mmwave_prefix}Num Targets${mmwave_suffix}"
     id: num_targets # do not change
     accuracy_decimals: 0
 
@@ -99,10 +101,10 @@ sensor:
       
 switch:
   - platform: safe_mode
-    name: use_safe_mode
+    name: "${mmwave_prefix}Use Safe mode${mmwave_suffix}"
 
   - platform: template
-    name: show_target_stats
+    name: "${mmwave_prefix}Show Target Stats${mmwave_suffix}"
     id: show_target_stats
     optimistic: true
     internal: true
@@ -110,7 +112,7 @@ switch:
       - lambda: 'return clearTargets();'
 
   - platform: template
-    name: mmwave_sensor
+    name: "${mmwave_prefix}mmWave Sensor${mmwave_suffix}"
     id: mmwave_sensor # do not change
     entity_category: config
     optimistic: true
@@ -122,7 +124,7 @@ switch:
         - script.execute: turn_off_mmwave_sensor
 
   - platform: template
-    name: led
+    name: "${mmwave_prefix}LED${mmwave_suffix}"
     id: led  # do not change
     entity_category: config
     optimistic: true
@@ -171,7 +173,7 @@ switch:
 
 number:
   - platform: template
-    name: distance
+    name: "${mmwave_prefix}Distance${mmwave_suffix}"
     id: distance # do not change
     entity_category: config
     min_value: 0.15
@@ -208,7 +210,7 @@ number:
               - script.execute: set_distance 
       
   - platform: template
-    name: latency
+    name: "${mmwave_prefix}Latency${mmwave_suffix}"
     id: latency # do not change
     entity_category: config
     min_value: 1
@@ -245,7 +247,7 @@ number:
               - script.execute: set_latency
 
   - platform: template
-    name: sensitivity
+    name: "${mmwave_prefix}Sensitivity${mmwave_suffix}"
     id: sensitivity # do not change
     entity_category: config
     min_value: 0
@@ -281,7 +283,7 @@ number:
 
 button:
   - platform: restart
-    name: Restart_ESP_${device_name}
+    name: "Restart ESP ${device_name}"
     entity_category: diagnostic
     on_press:
       - uart.write:
@@ -289,7 +291,7 @@ button:
           data: "resetSystem 0"
 
   - platform: template
-    name: factory_reset_mmwMCU_${device_name}
+    name: "Factory Reset mmwMCU ${device_name}"
     id: factory_reset_mmwMCU
     entity_category: diagnostic
     on_press:
