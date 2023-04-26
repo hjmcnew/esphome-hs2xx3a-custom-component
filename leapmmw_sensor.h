@@ -4,7 +4,7 @@
 void publishTarget(std::string idx, float dist, float snr) {
   auto get_sensors = App.get_sensors();
   for(int i = 0; i < get_sensors.size(); i++) {
-    auto name = get_sensors[i]->get_name();
+    std::string name = get_sensors[i]->get_name();
     auto target = "target_" + to_string(idx);
     if(name.size() > 10 && name.substr(0, 8) == target) {
       if(name.substr(9, 3) == "dis") {
@@ -31,7 +31,7 @@ class leapmmw : public Component, public UARTDevice {
   void publishNumber (std::string sensor, float resp) {
     auto get_numbers = App.get_numbers();
     for(int i = 0; i < get_numbers.size(); i++) {
-      auto name = get_numbers[i]->get_name();
+      std::string name = get_numbers[i]->get_name();
       // if(name.size() > 6 && name == sensor) {
       std::size_t found = name.find(sensor);
       if(name.size() > 6 && found!=std::string::npos) {
@@ -43,7 +43,7 @@ class leapmmw : public Component, public UARTDevice {
   void publishSwitch(std::string sensor, int state) {
     auto sens = App.get_switches();
     for(int i = 0; i < sens.size(); i++) {
-      auto name = sens[i]->get_name();
+      std::string name = sens[i]->get_name();
       // if(name.size() > 2 && name == sensor) {
       std::size_t found = name.find(sensor);
       if(name.size() > 2 && found!=std::string::npos) {
