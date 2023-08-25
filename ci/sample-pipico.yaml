@@ -3,9 +3,9 @@ esphome:
   friendly_name: Sample Pi Pico
 
 substitutions:
-  uart_tx_pin: GP0
-  uart_rx_pin: GP1
-  gpio_pin: GP22
+  uart_tx_pin: GPIO0
+  uart_rx_pin: GPIO1
+  gpio_pin: GPIO22
   header_file: ../leapmmw_sensor.h
 
 packages:
