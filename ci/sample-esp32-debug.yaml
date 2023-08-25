@@ -10,8 +10,8 @@ substitutions:
 
 
 packages:
-  uart: !include packages/uart_debug.yml
-  leapmmw_sensor: !include packages/leapmmw_sensor.yml
+  uart: !include ../packages/uart_debug.yml
+  leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
   
 esp32:
   board: esp32dev
