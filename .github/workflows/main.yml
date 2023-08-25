@@ -5,9 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
+      - name: Install esphome
+        run: |
           python3 -m venv venv
           source venv/bin/activate
           pip3 install esphome
-          ls -a
-          esphome compile sample-esp32.yaml
+      - name: Build ESP32
+        run: esphome compile ci/sample-esp32.yaml
