@@ -1,7 +1,9 @@
 name: test_build
 on: workflow_dispatch
 jobs:
-  check-bats-version:
+  test_build:
     runs-on: ubuntu-latest
     steps:
-      - run: python3 --version
+      - run: python3 -m venv venv
+      - run: source venv/bin/activate
+      - run: pip3 install esphome
