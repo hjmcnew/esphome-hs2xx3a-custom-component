@@ -3,4 +3,5 @@ on: workflow_dispatch
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
+    steps:
       - run: python3 --version
