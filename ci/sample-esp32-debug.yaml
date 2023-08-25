@@ -37,6 +37,4 @@ wifi:
   ap:
     ssid: "Fallback Hotspot"
     password: "changeme"
-
-captive_portal:
     
