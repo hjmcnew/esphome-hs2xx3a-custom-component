@@ -1,5 +1,8 @@
 name: test_build
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 2 * * *"
 jobs:
   test_build:
     runs-on: ubuntu-latest
