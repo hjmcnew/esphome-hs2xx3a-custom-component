@@ -8,10 +8,8 @@ substitutions:
   gpio_pin: D0
 
 packages:
-  remote_package:
-    url: https://github.com/hjmcnew/esphome-hs2xx3a-custom-component
-    ref: main
-    files: [packages/uart.yml, packages/leapmmw_sensor.yml]
+  uart: !include packages/uart.yml
+  leapmmw_sensor: !include packages/leapmmw_sensor.yml
   
 esp32:
   board: esp32dev
