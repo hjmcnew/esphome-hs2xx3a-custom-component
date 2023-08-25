@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: python3 -m venv venv
-      - run: source venv/bin/activate
-      - run: pip3 install esphome
-      - run: esphome version
+      - run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip3 install esphome
+          esphome build sample-esp32.yaml
