@@ -11,4 +11,6 @@ jobs:
           source venv/bin/activate
           pip3 install esphome
       - name: Build ESP32
-        run: esphome compile ci/sample-esp32.yaml
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32.yaml
