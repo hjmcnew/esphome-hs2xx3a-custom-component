@@ -1,0 +1,42 @@
+esphome:
+  name: sample-esp32
+  friendly_name: Sample ESP32
+
+substitutions:
+  uart_tx_pin: TX
+  uart_rx_pin: RX
+  gpio_pin: D0
+
+packages:
+  remote_package:
+    url: https://github.com/hjmcnew/esphome-hs2xx3a-custom-component
+    ref: main
+    files: [packages/uart.yml, packages/leapmmw_sensor.yml]
+  
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "changeme"
+    
+ota:
+  password: "changeme"
+
+wifi:
+  ssid: "changeme"
+  password: "changeme"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Sample ESP32 Fallback Hotspot"
+    password: "changeme"
+
+captive_portal:
+    
