@@ -12,8 +12,8 @@ packages:
   uart: !include ../packages/uart.yml
   leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
   
-raspberrypi:
-  board: pico
+rp2040:
+  board: rpipicow
   framework:
     type: arduino
 
