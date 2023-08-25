@@ -14,3 +14,11 @@ jobs:
         run: |
           source venv/bin/activate
           esphome compile ci/sample-esp32.yaml
+      - name: Build ESP32 Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-debug.yaml
+      - name: Build Raspberry Pi Pico
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-pipico.yaml
