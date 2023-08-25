@@ -1,0 +1,6 @@
+name: test_build
+on: workflow_dispatch
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+      - run: python3 --version
