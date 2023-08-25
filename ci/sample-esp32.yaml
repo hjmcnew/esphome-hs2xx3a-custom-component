@@ -8,8 +8,8 @@ substitutions:
   gpio_pin: GPIO33
 
 packages:
-  uart: !include packages/uart.yml
-  leapmmw_sensor: !include packages/leapmmw_sensor.yml
+  uart: !include ../packages/uart.yml
+  leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
   
 esp32:
   board: esp32dev
