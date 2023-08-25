@@ -14,8 +14,6 @@ packages:
   
 rp2040:
   board: rpipicow
-  framework:
-    type: arduino
 
 # Enable logging
 logger:
