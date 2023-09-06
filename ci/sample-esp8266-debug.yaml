@@ -1,0 +1,36 @@
+esphome:
+  name: sample-esp8266-debug
+  friendly_name: Sample ESP8266 Debug
+
+substitutions:
+  uart_tx_pin: TX
+  uart_rx_pin: RX
+  gpio_pin: GPIO16
+  header_file: ../leapmmw_sensor.h
+
+packages:
+  uart: !include ../packages/uart_debug.yml
+  leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
+  
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "yJx4S10jBOX2UbGqZmu5XfjJH67wnk5KcmDJpD4fwfc="
+    
+ota:
+  password: "changeme"
+
+wifi:
+  ssid: "changeme"
+  password: "changeme"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Fallback Hotspot"
+    password: "changeme"

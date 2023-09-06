@@ -1,0 +1,38 @@
+esphome:
+  name: sample-esp32
+  friendly_name: Sample ESP32
+
+substitutions:
+  uart_tx_pin: TX
+  uart_rx_pin: RX
+  gpio_pin: GPIO33
+  header_file: ../leapmmw_sensor.h
+
+packages:
+  uart: !include ../packages/uart.yml
+  leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
+  
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "yJx4S10jBOX2UbGqZmu5XfjJH67wnk5KcmDJpD4fwfc="
+    
+ota:
+  password: "changeme"
+
+wifi:
+  ssid: "changeme"
+  password: "changeme"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Fallback Hotspot"
+    password: "changeme"    
