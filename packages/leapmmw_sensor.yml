@@ -14,8 +14,9 @@ esphome:
 
 external_components:
   - source:
-      type: local
-      path: ../components
+      type: git
+      url: https://github.com/hjmcnew/esphome-hs2xx3a-custom-component
+      ref: convert-to-external
     components: [hs2xx3a]
 
 logger:
