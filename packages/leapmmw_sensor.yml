@@ -12,6 +12,12 @@ esphome:
   includes:
     - ${header_file}
 
+external_components:
+  - source:
+      type: local
+      path: components
+    components: [hs2xx3a]
+
 logger:
   logs:
     sensor: INFO # reduced logging to minimize web_server target overload..
@@ -90,12 +96,12 @@ sensor:
     id: num_targets # do not change
     accuracy_decimals: 0
 
-  - platform: custom
-    lambda: |-
-      auto s = new leapmmw(id(uart_bus));
-      App.register_component(s);
-      return {};
-    sensors:
+#  - platform: custom
+#    lambda: |-
+#      auto s = new leapmmw(id(uart_bus));
+#      App.register_component(s);
+#      return {};
+#    sensors:
       
 switch:
   - platform: safe_mode
