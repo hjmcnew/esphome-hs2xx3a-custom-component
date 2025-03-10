@@ -101,7 +101,7 @@ sensor:
       auto s = new leapmmw(id(uart_bus));
       App.register_component(s);
       return {};
-    sensors:
+    binary_sensors:
       
 switch:
   - platform: safe_mode
