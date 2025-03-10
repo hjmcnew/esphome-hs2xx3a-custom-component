@@ -30,6 +30,7 @@ uart:
   rx_pin: ${uart_rx_pin}
   baud_rate: 115200
 ##
+hs2xx3a:
 
 binary_sensor:
   - platform: gpio
