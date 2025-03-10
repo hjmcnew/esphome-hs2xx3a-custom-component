@@ -51,11 +51,11 @@ binary_sensor:
             - lambda: |-
                 return clearTargets();
   - platform: hs2xx3a
-    lambda: |-
-      auto s = new leapmmw(id(uart_bus));
-      App.register_component(s);
-      return {};
-    sensors:
+#    lambda: |-
+#      auto s = new leapmmw(id(uart_bus));
+#      App.register_component(s);
+#      return {};
+#    sensors:
     
 sensor:      
   - platform: template
