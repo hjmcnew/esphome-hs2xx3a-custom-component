@@ -96,12 +96,12 @@ sensor:
     id: num_targets # do not change
     accuracy_decimals: 0
 
-#  - platform: custom
-#    lambda: |-
-#      auto s = new leapmmw(id(uart_bus));
-#      App.register_component(s);
-#      return {};
-#    sensors:
+  - platform: hs2xx3a
+    lambda: |-
+      auto s = new leapmmw(id(uart_bus));
+      App.register_component(s);
+      return {};
+    sensors:
       
 switch:
   - platform: safe_mode
