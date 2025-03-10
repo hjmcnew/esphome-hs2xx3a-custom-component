@@ -4,7 +4,7 @@ from esphome.components import binary_sensor
 from esphome.const import CONF_ID
 from .. import hs2xx3a_ns, HS2XX3A
 
-DEPENDNCIES = ['hs2xx3a']
+DEPENDENCIES = ['hs2xx3a']
 
 HS2XX3ABinarySensor = hs2xx3a_ns.class_('HS2XX3ABinarySensor', binary_sensor.BinarySensor, cg.Component)
 
