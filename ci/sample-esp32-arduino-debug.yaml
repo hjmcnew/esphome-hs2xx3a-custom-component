@@ -1,6 +1,6 @@
 esphome:
-  name: sample-esp32
-  friendly_name: Sample ESP32
+  name: sample-esp32-debug
+  friendly_name: Sample ESP32 Debug
 
 substitutions:
   uart_tx_pin: TX
@@ -8,8 +8,9 @@ substitutions:
   gpio_pin: GPIO33
   header_file: ../leapmmw_sensor.h
 
+
 packages:
-  uart: !include ../packages/uart.yml
+  uart: !include ../packages/uart_debug.yml
   leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
   
 esp32:
@@ -26,7 +27,8 @@ api:
     key: "yJx4S10jBOX2UbGqZmu5XfjJH67wnk5KcmDJpD4fwfc="
     
 ota:
-  password: "changeme"
+  - platform: esphome
+    password: "changeme"
 
 wifi:
   ssid: "changeme"
@@ -35,4 +37,5 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Fallback Hotspot"
-    password: "changeme"    
+    password: "changeme"
+    

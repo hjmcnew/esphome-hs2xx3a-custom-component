@@ -1,22 +1,21 @@
 esphome:
-  name: sample-pipico
-  friendly_name: Sample Pi Pico
+  name: sample-esp32
+  friendly_name: Sample ESP32
 
 substitutions:
-  uart_tx_pin: GPIO0
-  uart_rx_pin: GPIO1
-  gpio_pin: GPIO22
+  uart_tx_pin: TX
+  uart_rx_pin: RX
+  gpio_pin: GPIO33
   header_file: ../leapmmw_sensor.h
 
 packages:
-  uart: !include ../packages/uart_debug.yml
+  uart: !include ../packages/uart.yml
   leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
   
-rp2040:
-  board: rpipicow
+esp32:
+  board: esp32dev
   framework:
-    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git
-
+    type: arduino
 
 # Enable logging
 logger:
@@ -37,5 +36,4 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Fallback Hotspot"
-    password: "changeme"
-    
+    password: "changeme"    

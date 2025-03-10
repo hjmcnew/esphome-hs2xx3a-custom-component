@@ -24,7 +24,8 @@ api:
     key: "yJx4S10jBOX2UbGqZmu5XfjJH67wnk5KcmDJpD4fwfc="
     
 ota:
-  password: "changeme"
+  - platform: esphome
+    password: "changeme"
 
 wifi:
   ssid: "changeme"

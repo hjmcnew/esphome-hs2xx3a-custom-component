@@ -13,14 +13,22 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           pip3 install esphome
-      - name: Build ESP32
+      - name: Build ESP32 ESP-IDF
         run: |
           source venv/bin/activate
-          esphome compile ci/sample-esp32.yaml
-      - name: Build ESP32 Debug
+          esphome compile ci/sample-esp32-espidf.yaml
+      - name: Build ESP32 ESP-IDF Debug
         run: |
           source venv/bin/activate
-          esphome compile ci/sample-esp32-debug.yaml
+          esphome compile ci/sample-esp32-espidf-debug.yaml
+      - name: Build ESP32 Arduino
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-arduino.yaml
+      - name: Build ESP32 Arduino Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-arduino-debug.yaml
       - name: Build ESP8266
         run: |
           source venv/bin/activate
