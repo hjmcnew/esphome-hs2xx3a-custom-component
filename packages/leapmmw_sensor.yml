@@ -49,6 +49,12 @@ binary_sensor:
                 state: 0
             - lambda: |-
                 return clearTargets();
+  - platform: hs2xx3a
+    lambda: |-
+      auto s = new leapmmw(id(uart_bus));
+      App.register_component(s);
+      return {};
+    sensors:
     
 sensor:      
   - platform: template
@@ -96,13 +102,6 @@ sensor:
     id: num_targets # do not change
     accuracy_decimals: 0
 
-  - platform: hs2xx3a
-    lambda: |-
-      auto s = new leapmmw(id(uart_bus));
-      App.register_component(s);
-      return {};
-    binary_sensors:
-      
 switch:
   - platform: safe_mode
     name: use_safe_mode
