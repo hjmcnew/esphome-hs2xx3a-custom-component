@@ -15,7 +15,7 @@ esphome:
 external_components:
   - source:
       type: local
-      path: components
+      path: ../components
     components: [hs2xx3a]
 
 logger:
