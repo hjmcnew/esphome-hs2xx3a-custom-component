@@ -1,0 +1,47 @@
+name: test_build
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 2 * * *"
+jobs:
+  test_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install esphome
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip3 install esphome
+      - name: Build ESP32 ESP-IDF
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-espidf.yaml
+      - name: Build ESP32 ESP-IDF Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-espidf-debug.yaml
+      - name: Build ESP32 Arduino
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-arduino.yaml
+      - name: Build ESP32 Arduino Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp32-arduino-debug.yaml
+      - name: Build ESP8266
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp8266.yaml
+      - name: Build ESP8266 Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-esp8266-debug.yaml
+      - name: Build Raspberry Pi Pico
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-pipico.yaml
+      - name: Build Raspberry Pi Pico Debug
+        run: |
+          source venv/bin/activate
+          esphome compile ci/sample-pipico-debug.yaml

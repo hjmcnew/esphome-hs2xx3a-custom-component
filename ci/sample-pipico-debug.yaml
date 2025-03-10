@@ -1,0 +1,38 @@
+esphome:
+  name: sample-pipico
+  friendly_name: Sample Pi Pico
+
+substitutions:
+  uart_tx_pin: GPIO0
+  uart_rx_pin: GPIO1
+  gpio_pin: GPIO22
+  header_file: ../leapmmw_sensor.h
+
+packages:
+  uart: !include ../packages/uart_debug.yml
+  leapmmw_sensor: !include ../packages/leapmmw_sensor.yml
+  
+rp2040:
+  board: rpipicow
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "yJx4S10jBOX2UbGqZmu5XfjJH67wnk5KcmDJpD4fwfc="
+    
+ota:
+  - platform: esphome
+    password: "changeme"
+
+wifi:
+  ssid: "changeme"
+  password: "changeme"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Fallback Hotspot"
+    password: "changeme"
+    

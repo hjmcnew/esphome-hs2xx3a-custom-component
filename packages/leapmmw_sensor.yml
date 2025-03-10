@@ -12,6 +12,12 @@ esphome:
   includes:
     - ${header_file}
 
+external_components:
+  - source:
+      type: git
+      url: https://github.com/robertklep/esphome-custom-component
+    components: [ custom, custom_component ]
+
 logger:
   logs:
     sensor: INFO # reduced logging to minimize web_server target overload..
