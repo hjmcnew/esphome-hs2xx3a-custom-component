@@ -1,11 +1,14 @@
 #include "esphome.h"
 #include <string>
+#include <sstream>
 
 void publishTarget(std::string idx, float dist, float snr) {
   auto get_sensors = App.get_sensors();
   for(int i = 0; i < get_sensors.size(); i++) {
     std::string name = get_sensors[i]->get_name();
-    auto target = "target_" + to_string(idx);
+    std::stringstream ptss;
+    ptss << idx;
+    auto target = "target_" + ptss.str();
     if(name.size() > 10 && name.substr(0, 8) == target) {
       if(name.substr(9, 3) == "dis") {
         get_sensors[i]->publish_state(dist);
@@ -16,7 +19,11 @@ void publishTarget(std::string idx, float dist, float snr) {
   }
 };
 static void clearTargets () {
-  for(int i = 1 ; i < 9; i++) publishTarget(to_string(i), 0, 0);
+  for(int i = 1 ; i < 9; i++) {
+    std::stringstream ctss;
+    ctss << i;
+    publishTarget(ctss.str(), 0, 0);
+  }
 }
 
 
