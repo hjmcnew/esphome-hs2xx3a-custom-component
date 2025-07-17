@@ -15,8 +15,9 @@ esphome:
 external_components:
   - source:
       type: git
-      url: https://github.com/robertklep/esphome-custom-component
-    components: [ custom, custom_component ]
+      url: https://github.com/hjmcnew/esphome-hs2xx3a-custom-component
+      ref: convert-to-external
+    components: [hs2xx3a]
 
 logger:
   logs:
@@ -30,6 +31,7 @@ uart:
   rx_pin: ${uart_rx_pin}
   baud_rate: 115200
 ##
+hs2xx3a:
 
 binary_sensor:
   - platform: gpio
@@ -49,6 +51,13 @@ binary_sensor:
                 state: 0
             - lambda: |-
                 return clearTargets();
+  - platform: hs2xx3a
+    name: some_sensor
+#    lambda: |-
+#      auto s = new leapmmw(id(uart_bus));
+#      App.register_component(s);
+#      return {};
+#    sensors:
     
 sensor:      
   - platform: template
@@ -96,13 +105,6 @@ sensor:
     id: num_targets # do not change
     accuracy_decimals: 0
 
-  - platform: custom
-    lambda: |-
-      auto s = new leapmmw(id(uart_bus));
-      App.register_component(s);
-      return {};
-    sensors:
-      
 switch:
   - platform: safe_mode
     name: use_safe_mode
