@@ -1,3 +1,5 @@
+# This repo is no longer actively maintained as of 2025-12-30.
+
 ## This repo houses development of a custom component to support the LeapMMW HS2xx3A series of mmWave sensors, also branded as the DFRobot sen0395.
 
 ### Installation:
